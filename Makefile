@@ -81,8 +81,12 @@ else
 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 endif
 
-## Run pytest
-test:
+## Test python environment is setup correctly
+test_env:
+	$(PYTHON_INTERPRETER) test_environment.py
+
+## Run all tests
+test_all:
 	$(PYTHON_INTERPRETER) -m pytest
 
 #################################################################################

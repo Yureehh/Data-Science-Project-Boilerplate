@@ -13,7 +13,7 @@ The following steps will guide you through the process of setting up the project
    Run `make requirements`. This command installs the necessary Python dependencies for the project as listed in the `requirements.txt` file.
 
 4. **Check Your Environment:**
-   Run `make test_environment`. This command verifies that the Python environment is set up correctly and all dependencies are properly installed.
+   Run `make test_env`. This command verifies that the Python environment is set up correctly and all dependencies are properly installed.
 
 5. **Install Pre-commit Hooks:**
    Run `make setup`. This command installs pre-commit hooks, which automatically check your code for common issues before commits.
@@ -27,8 +27,11 @@ The following steps will guide you through the process of setting up the project
 8. **Lint Your Code:**
    Run `make lint`. This command checks your code for stylistic errors using flake8 and black, ensuring code quality and consistency.
 
-9. **Run Pre-commit on All Files:**
-   Run `make precommit`. This command runs the pre-commit checks on all files in the project.
+9. **Run All Tests:**
+    Run `make test_all`. This command runs all tests in the project using pytest.
 
-10. **Sync Data to/from S3:**
+10. **Run Pre-commit on All Files:**
+    Run `make precommit`. This command runs the pre-commit checks on all files in the project.
+
+11. **Sync Data to/from S3:**
     If you're using an Amazon S3 bucket to store your data, you can sync your data to and from S3 using `make sync_data_to_s3` and `make sync_data_from_s3`. Remember to replace `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile with the actual name of your S3 bucket.
