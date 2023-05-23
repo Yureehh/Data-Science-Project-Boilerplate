@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Data Science Project Boilerplate documentation!
-==============================================
+==================================================
 
 Contents:
 
