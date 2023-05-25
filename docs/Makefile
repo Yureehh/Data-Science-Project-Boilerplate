@@ -77,17 +77,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Data Science Project Boilerplate.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Data-Science-Project-Boilerplate.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Data Science Project Boilerplate.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Data-Science-Project-Boilerplate.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/Data Science Project Boilerplate"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Data Science Project Boilerplate"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/Data-Science-Project-Boilerplate"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Data-Science-Project-Boilerplate"
 	@echo "# devhelp"
 
 epub:
