@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Data-Science-Project-Boilerplate documentation build configuration file, created by
 # sphinx-quickstart.
