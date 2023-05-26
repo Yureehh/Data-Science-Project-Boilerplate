@@ -31,9 +31,7 @@ data: requirements
 
 ## Delete all compiled Python files
 clean:
-	del /S /Q *.pyc
-	del /S /Q *.pyo
-	del /S /Q __pycache__
+	$(PYTHON_INTERPRETER) -c "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc')]"
 
 ## Lint using flake8
 lint:
