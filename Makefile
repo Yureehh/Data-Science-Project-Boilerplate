@@ -48,6 +48,14 @@ precommit:
 setup: requirements
 	pre-commit install
 
+## Test python environment is setup correctly
+test_env:
+	$(PYTHON_INTERPRETER) tests/test_environment.py
+
+## Run all tests
+test_all:
+	$(PYTHON_INTERPRETER) -m pytest
+
 ## Upload Data to S3
 sync_data_to_s3:
 ifeq (default,$(PROFILE))
@@ -85,14 +93,6 @@ else
 endif
 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 endif
-
-## Test python environment is setup correctly
-test_env:
-	$(PYTHON_INTERPRETER) tests/test_environment.py
-
-## Run all tests
-test_all:
-	$(PYTHON_INTERPRETER) -m pytest
 
 #################################################################################
 # PROJECT RULES                                                                 #

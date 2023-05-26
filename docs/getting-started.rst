@@ -3,17 +3,17 @@ Getting Started
 
 The following steps will guide you through the process of setting up the project:
 
-0. **Mind the Terminal You're Using:**
+0. **Change the name:**
+   Search and replace all instances of Data-Science-Project-Boilerplate with the new name of your project. This includes the README.md file, the Makefile, and the setup.py file.
+
+1. **Mind the Terminal You're Using:**
    If you are on Linux or macOS, you can use the default terminal. If you are on Windows, you should use `Git Bash` instead of `cmd` or `PowerShell`. This is because `Git Bash` is a Unix-like terminal, which is required for some of the commands in the Makefile.
 
-1. **Create a Python Environment:**
+2. **Create a Python Environment:**
    Run `make create_environment`. This command creates a new Python environment for the project using either conda (if available) or virtualenv, isolating the project dependencies from other Python projects you might have on your system.
 
-2. **Activate the Python Environment:**
+3. **Activate the Python Environment:**
    If conda was used to create the environment, activate it with `conda activate <project_name>`. If virtualenv was used, activate the environment with `workon <project_name>`. This activates the environment for use.
-
-3. **Check Your Environment:**
-   Run `make test_env`. This command verifies that the Python environment is set up correctly and all dependencies are properly installed.
 
 4. **Install the Dependencies:**
    Run `make requirements`. This command installs the necessary Python dependencies for the project as listed in the `requirements.txt` file.
@@ -35,6 +35,3 @@ The following steps will guide you through the process of setting up the project
 
 10. **Run Pre-commit on All Files:**
     Run `make precommit`. This command runs the pre-commit checks on all files in the project.
-
-11. **Sync Data to/from S3:**
-    If you're using an Amazon S3 bucket to store your data, you can sync your data to and from S3 using `make sync_data_to_s3` and `make sync_data_from_s3`. Remember to replace `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile with the actual name of your S3 bucket.
