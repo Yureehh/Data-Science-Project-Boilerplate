@@ -35,4 +35,4 @@ jobs:
         conda run -n testenv pip install -r requirements.txt
     - name: Run tox
       run: |
-        conda run -n testenv tox1
+        conda run -n testenv tox
