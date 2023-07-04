@@ -3,29 +3,133 @@ Commands
 
 This document provides an overview of the common tasks that can be executed in this project using the Makefile commands.
 
-Syncing Data with S3
---------------------
+Set up Python interpreter environment
+-------------------------------------
 
-`make sync_data_to_s3` and `make sync_data_from_s3` are commands to synchronize your data to and from an Amazon S3 bucket.
+.. code-block:: bash
 
-**Upload Data to S3**
+    make create_environment
 
-Command:
+Description:
+    Set up Python interpreter environment
+
+Test Environment
+-------------------------------------------
+
+.. code-block:: bash
+
+    make test_env
+
+Description:
+    Test Python environment is set up correctly
+
+Install Dependencies
+---------------------------
+
+.. code-block:: bash
+
+    make requirements
+
+Description:
+    Install Python Dependencies
+
+Set up project
+--------------
+
+.. code-block:: bash
+
+    make setup
+
+Description:
+    Setup project installing preoccommit hooks and requirements
+
+Delete compiled files
+--------------------------------
+
+.. code-block:: bash
+
+    make clean
+
+Description:
+    Delete all compiled Python files
+
+Run pre-commit
+---------------------------
+
+.. code-block:: bash
+
+    make precommit
+
+Description:
+    Run pre-commit on all files
+
+Make Dataset
+------------
+
+.. code-block:: bash
+
+    make data
+
+Description:
+    Make dataset from raw data into processed data
+
+Run tests
+-------------
+
+.. code-block:: bash
+
+    make tests
+
+Description:
+    Run all tests
+
+Commit
+-------------
+
+.. code-block:: bash
+
+    make commit
+
+Description:
+    Commit all changes to git
+
+Usage:
+    This command will prompt you to enter a commit message. Make sure you are in the root directory of your project when running the command
+
+Push
+-------------
+.. code-block:: bash
+
+    make push
+
+Description:
+    Push all changes to git
+
+Usage:
+    This command will push all changes to the remote repository. Make sure you are in the root directory of your project when running the command.
+
+Upload Data to S3
+-----------------
+
+.. code-block:: bash
+
     make sync_data_to_s3
 
 Description:
-    This command uses `aws s3 sync` to recursively sync files in the `data/` directory to your specified S3 bucket.
+    Upload Data to S3
 
 Usage:
     Before using this command, replace `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile with your actual S3 bucket name (excluding 's3://').
 
-**Download Data from S3**
+Download Data from S3
+---------------------
 
-Command:
+.. code-block:: bash
+
     make sync_data_from_s3
 
 Description:
-    This command uses `aws s3 sync` to recursively sync files from your specified S3 bucket to the `data/` directory.
+    Download Data from S3
 
 Usage:
     Similarly, ensure that `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile is replaced with your actual S3 bucket name before using this command.

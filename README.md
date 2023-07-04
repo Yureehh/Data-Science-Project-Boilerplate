@@ -53,4 +53,5 @@ This repository is cloned every time I start a new Data Science project. It prov
 
 ---
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+## To Get Started
+See the file getting_started.md for instructions on how to get started with this template. Always remember to add all the potential new commands to the `getting-started` and `commands` files where necessary.

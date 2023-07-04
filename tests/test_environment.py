@@ -1,7 +1,5 @@
 import sys
 
-import pytest
-
 REQUIRED_PYTHON = "python3"
 
 
