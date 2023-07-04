@@ -30,7 +30,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install tox-conda
         conda create --name testenv python=${{ matrix.python-version }}
-        echo "source activate testenv" >> $BASH_ENV
+        echo "source activate testenv" >> $GITHUB_ENV
     - name: Install requirements
       run: |
         pip install -r requirements.txt
