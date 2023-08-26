@@ -53,5 +53,41 @@ This repository is cloned every time I start a new Data Science project. It prov
 
 ---
 
+## Pre-requisites
+
+- Docker (optional)
+- Conda or Virtualenv (optional)
+- Git Bash for Windows users
+
 ## To Get Started
-See the file getting_started.md for instructions on how to get started with this template. Always remember to add all the potential new commands to the `getting-started` and `commands` files where necessary.
+
+Refer to [getting_started.md](docs\getting_started.rst) for detailed instructions on setting up the project. Here's a brief outline of what you will find:
+
+### Decision Table: Docker vs Conda
+
+| Feature          | Docker                                                                 | Conda                                |
+|------------------|------------------------------------------------------------------------|--------------------------------------|
+| Isolation        | Complete OS-level isolation.                                           | Environment-level isolation.         |
+| Complexity       | Higher initial learning curve.                                         | Easier to use for Python-specific tasks.|
+| Portability      | Easily shareable as a container.                                       | Environment file can be shared, but less portable.|
+| System Overhead  | Higher due to OS-level virtualization.                                 | Lower, only isolates Python environment.|
+| Use Case         | Ideal for deploying apps and microservices.                            | Ideal for data science and analytics.|
+
+### Quick Start Guide
+
+1. **Environment Setup**: Decide between using Docker or Conda for environment setup. Follow the respective instructions in [getting_started.md](getting_started.md).
+
+2. **Clone the Repository**:
+    \`\`\`bash
+    git clone <repository_url>
+    \`\`\`
+
+3. **Initial Configuration**: Change the project name and description in `Makefile`, `README.md`, `index.rst`, and `setup.py`.
+
+4. **Dependency Installation**: Follow the instructions in [getting_started.md](getting_started.md) to install necessary dependencies.
+
+5. **Data Setup**: Run the necessary `make` commands to set up your data. Refer to [commands.md](commands.md) for a list of available commands.
+
+6. **Development**: Refer to [getting_started.md](getting_started.md) for guidelines on developing your data science project.
+
+7. **Commands**: Always remember to add any new potential commands to the `getting_started.md` and `commands.md` files where necessary.

@@ -1,4 +1,4 @@
-.PHONY: clean data lint precommit requirements sync_data_to_s3 sync_data_from_s3 test
+.PHONY: clean data lint precommit requirements sync_data_to_s3 sync_data_from_s3 test docker-build docker-run docs
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -9,6 +9,7 @@ BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = Data-Science-Project-Boilerplate
 PYTHON_INTERPRETER = python3.11
+ENV_METHOD ?= conda  # Can be 'conda', 'virtualenv', or 'docker'
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -22,23 +23,28 @@ endif
 
 ## Set up python interpreter environment
 create_environment:
+ifeq ($(ENV_METHOD),conda)
+	# Conda related setup
+	@echo "Using Conda for environment setup..."
 ifeq (True,$(HAS_CONDA))
-		@echo ">>> Detected conda, creating conda environment."
-ifeq (3,$(findstring 3,$(PYTHON_INTERPRETER)))
+	@echo ">>> Detected conda, creating conda environment."
 	conda create --name $(PROJECT_NAME) python=3
+	@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
 else
-	conda create --name $(PROJECT_NAME) python=2.7
+	@echo ">>> Conda is not installed."
 endif
-		@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
+else ifeq ($(ENV_METHOD),docker)
+	# Docker related setup
+	@echo "Using Docker for environment setup..."
+	docker build -t $(PROJECT_NAME) .
+	@echo ">>> Docker image built. Run with:\ndocker run -it $(PROJECT_NAME)"
 else
+	# Virtualenv related setup
+	@echo "Using virtualenv for environment setup..."
 	$(PYTHON_INTERPRETER) -m pip install -q virtualenv virtualenvwrapper
 	@echo ">>> Installing virtualenvwrapper if not already installed.\nMake sure the following lines are in shell startup file\n\
 	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource `which virtualenvwrapper.sh`\n"
-ifeq ($(OS),Windows_NT)  # Detect Windows.
 	bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)"
-else
-	bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)"
-endif
 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 endif
 
@@ -54,6 +60,7 @@ requirements: test_env
 ## Set up project
 setup: requirements
 	pre-commit install
+
 ## Delete all compiled Python files
 clean:
 	$(PYTHON_INTERPRETER) -c "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc')]"
@@ -64,13 +71,18 @@ precommit:
 
 ## Make Dataset
 data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/interim data/processed
 
 ## Run all tests
 tests:
 	$(PYTHON_INTERPRETER) -m pytest
 
-#Commits all changes to git after running pre-commit
+## Generate Project Documentation
+docs:
+	sphinx-build -b html docs/source docs/build
+	@echo ">>> Documentation generated. Open docs/build/index.html to view it."
+
+## Commits all changes to git after running pre-commit
 commit: precommit
 	@read -p "Enter commit message: " message; \
 	git add .; \
@@ -99,69 +111,10 @@ else
 	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
 endif
 
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
+## Build Docker Image
+docker-build:
+	docker build -t $(PROJECT_NAME) .
 
-
-
-#################################################################################
-# Self Documenting Commands                                                     #
-#################################################################################
-
-.DEFAULT_GOAL := help
-
-# Inspired by <http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html>
-# sed script explained:
-# /^##/:
-# 	* save line in hold space
-# 	* purge line
-# 	* Loop:
-# 		* append newline + line to hold space
-# 		* go to next line
-# 		* if line starts with doc comment, strip comment character off and loop
-# 	* remove target prerequisites
-# 	* append hold space (+ newline) to line
-# 	* replace newline plus comments by `---`
-# 	* print line
-# Separate expressions are necessary because labels cannot be delimited by
-# semicolon; see <http://stackoverflow.com/a/11799865/1968>
-.PHONY: help
-help:
-	@echo "$$(tput bold)Available rules:$$(tput sgr0)"
-	@echo
-	@sed -n -e "/^## / { \
-		h; \
-		s/.*//; \
-		:doc" \
-		-e "H; \
-		n; \
-		s/^## //; \
-		t doc" \
-		-e "s/:.*//; \
-		G; \
-		s/\\n## /---/; \
-		s/\\n/ /g; \
-		p; \
-	}" ${MAKEFILE_LIST} \
-	| LC_ALL='C' sort --ignore-case \
-	| awk -F '---' \
-		-v ncol=$$(tput cols) \
-		-v indent=19 \
-		-v col_on="$$(tput setaf 6)" \
-		-v col_off="$$(tput sgr0)" \
-	'{ \
-		printf "%s%*s%s ", col_on, -indent, $$1, col_off; \
-		n = split($$2, words, " "); \
-		line_length = ncol - indent; \
-		for (i = 1; i <= n; i++) { \
-			line_length -= length(words[i]) + 1; \
-			if (line_length <= 0) { \
-				line_length = ncol - indent - length(words[i]) - 1; \
-				printf "\n%*s ", -indent, " "; \
-			} \
-			printf "%s ", words[i]; \
-		} \
-		printf "\n"; \
-	}' \
-	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
+## Run Docker Container
+docker-run:
+	docker run -it $(PROJECT_NAME)

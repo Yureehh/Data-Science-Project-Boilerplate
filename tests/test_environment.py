@@ -1,18 +1,16 @@
 import sys
 
-REQUIRED_PYTHON = "python3"
+REQUIRED_MAJOR = 3  # For Python 3
 
 
 def test_python_version():
     system_major = sys.version_info.major
     # sourcery skip: no-conditionals-in-tests
-    if REQUIRED_PYTHON == "python":
-        required_major = 2
-    elif REQUIRED_PYTHON == "python3":
-        required_major = 3
-    else:
-        raise ValueError(f"Unrecognized python interpreter: {REQUIRED_PYTHON}")
+    if system_major != REQUIRED_MAJOR:
+        raise OSError(
+            f"This project requires Python {REQUIRED_MAJOR}. Found: Python {sys.version}"
+        )
 
-    assert (
-        system_major == required_major
-    ), f"This project requires Python {required_major}. Found: Python {sys.version}"
+
+# Call the function to perform the check
+test_python_version()

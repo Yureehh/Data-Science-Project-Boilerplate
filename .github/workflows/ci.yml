@@ -2,37 +2,45 @@ name: Python package
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop] # Add additional branches
   pull_request:
-    branches: [main]
+    branches: [main, develop] # Add additional branches
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.11", "3.10", "3.9"] # Multiple Python versions
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install tox-conda
-        conda create --name testenv python=${{ matrix.python-version }}
-    - name: Install requirements
-      run: |
-        conda run -n testenv pip install -r requirements.txt
-    - name: Run tox
-      run: |
-        conda run -n testenv tox
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Cache conda dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/conda_pkgs_dir
+          key: ${{ runner.os }}-conda-${{ hashFiles('**/requirements.txt') }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox-conda
+          conda create --name testenv python=${{ matrix.python-version }}
+      - name: Install requirements
+        run: |
+          conda run -n testenv pip install -r requirements.txt
+      - name: Run mypy
+        run: |
+          conda run -n testenv mypy src/  # Adjust the path as per your project structure
+      - name: Run tox
+        run: |
+          conda run -n testenv tox

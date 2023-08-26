@@ -1,6 +1,9 @@
-def test_pytest():  # sourcery skip: equality-identity, remove-assert-true
-    """
-    Make a random test just to check wheter this file gets executed by pytest
-    """
+import os
 
-    assert 1 == 1
+
+def test_data_directories_exist():
+    assert os.path.exists("data/raw"), "'data/raw' directory not found"
+    assert os.path.exists(
+        "data/processed"
+    ), "'data/processed' directory not found"
+    assert os.path.exists("data/interim"), "'data/interim' directory not found"

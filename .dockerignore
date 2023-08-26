@@ -1,0 +1,11 @@
+.git
+.git*
+__pycache__
+*.pyc
+*.pyo
+Dockerfile
+*.md
+*.dockerignore
+*.env
+tests/
+*.egg-info/

@@ -1,135 +1,182 @@
 Commands
 ========
 
-This document provides an overview of the common tasks that can be executed in this project using the Makefile commands.
+This section provides an exhaustive list of commands in the Makefile, organized by functionality. Each command is followed by a description and potential points of failure.
 
-Set up Python interpreter environment
--------------------------------------
+Environment Setup (Choose One)
+------------------------------
+
+Docker Operations (Optional)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Build Docker Image**
+
+.. code-block:: bash
+
+    docker build -t my_project .
+
+- **Description**: Build a Docker image encapsulating all project dependencies.
+- **If Chosen**: Skip to 'Dependencies and Setup'
+
+.. admonition:: Troubleshooting
+
+    If build fails, check the Dockerfile and logs for issues.
+
+**Run Docker Container**
+
+.. code-block:: bash
+
+    docker run -it my_project
+
+- **Description**: Run and interact with the project within the Docker container.
+
+
+Python Environment Setup (If not using Docker)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**Create Python Environment**
 
 .. code-block:: bash
 
     make create_environment
 
-Description:
-    Set up Python interpreter environment
+- **Description**: Initialize Python interpreter environment.
 
-Test Environment
--------------------------------------------
+.. admonition:: Troubleshooting
+
+    Ensure either `conda` or `virtualenv` is installed.
+
+**Test Environment Configuration**
 
 .. code-block:: bash
 
     make test_env
 
-Description:
-    Test Python environment is set up correctly
+- **Description**: Verify Python environment setup.
 
-Install Dependencies
----------------------------
+
+Dependencies and Setup (If not using Docker)
+--------------------------------------------
+
+**Install Dependencies**
 
 .. code-block:: bash
 
     make requirements
 
-Description:
-    Install Python Dependencies
+- **Description**: Install necessary Python packages.
 
-Set up project
---------------
+**Project Setup**
 
 .. code-block:: bash
 
     make setup
 
-Description:
-    Setup project installing preoccommit hooks and requirements
+- **Description**: Setup project, install pre-commit hooks and requirements.
 
-Delete compiled files
---------------------------------
+
+Cleanup
+-------
+
+**Delete Compiled Files**
 
 .. code-block:: bash
 
     make clean
 
-Description:
-    Delete all compiled Python files
+- **Description**: Remove compiled Python files.
 
-Run pre-commit
----------------------------
+
+Code Quality Checks
+-------------------
+
+**Run Pre-commit Hooks**
 
 .. code-block:: bash
 
     make precommit
 
-Description:
-    Run pre-commit on all files
+- **Description**: Run pre-commit hooks on all staged files.
 
-Make Dataset
-------------
+
+Data Operations
+---------------
+
+**Generate Dataset**
 
 .. code-block:: bash
 
     make data
 
-Description:
-    Make dataset from raw data into processed data
+- **Description**: Convert raw data into a processed dataset.
 
-Run tests
--------------
+
+Testing
+-------
+
+**Run Tests**
 
 .. code-block:: bash
 
     make tests
 
-Description:
-    Run all tests
+- **Description**: Execute all unit tests.
 
-Commit
--------------
+
+Version Control
+---------------
+
+**Commit Changes**
 
 .. code-block:: bash
 
     make commit
 
-Description:
-    Commit all changes to git
+- **Description**: Commit all staged changes.
+- **Usage**: Prompted for a commit message.
 
-Usage:
-    This command will prompt you to enter a commit message. Make sure you are in the root directory of your project when running the command
+**Push Changes**
 
-Push
--------------
 .. code-block:: bash
 
     make push
 
-Description:
-    Push all changes to git
+- **Description**: Push commits to remote repository.
 
-Usage:
-    This command will push all changes to the remote repository. Make sure you are in the root directory of your project when running the command.
 
-Upload Data to S3
------------------
+Documentation
+-------------
+
+**Generate Documentation**
+
+.. code-block:: bash
+
+    make docs
+
+- **Description**: Generate project documentation using Sphinx.
+
+.. admonition:: Troubleshooting
+
+    If documentation generation fails, ensure Sphinx is installed and check the Sphinx configuration file (usually `conf.py` in the `docs` directory).
+
+
+S3 Operations
+-------------
+
+**Upload Data to S3**
 
 .. code-block:: bash
 
     make sync_data_to_s3
 
-Description:
-    Upload Data to S3
+- **Description**: Upload data to an S3 bucket.
+- **Usage**: Replace placeholder with your S3 bucket name in Makefile.
 
-Usage:
-    Before using this command, replace `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile with your actual S3 bucket name (excluding 's3://').
-
-Download Data from S3
----------------------
+**Download Data from S3**
 
 .. code-block:: bash
 
     make sync_data_from_s3
 
-Description:
-    Download Data from S3
-
-Usage:
-    Similarly, ensure that `[OPTIONAL] your-bucket-for-syncing-data` in the Makefile is replaced with your actual S3 bucket name before using this command.
+- **Description**: Download data from an S3 bucket.
+- **Usage**: Replace placeholder with your S3 bucket name in Makefile.

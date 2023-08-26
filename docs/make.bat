@@ -1,190 +1,52 @@
 @ECHO OFF
+SETLOCAL
 
-REM Command file for Sphinx documentation
+:: Function to handle build
+:build_target
+    ECHO Starting build for target: %1
+    %SPHINXBUILD% -b %1 %ALLSPHINXOPTS% %BUILDDIR%/%1
+    IF ERRORLEVEL 1 (
+        ECHO Error during build for target: %1. Exiting.
+        EXIT /B 1
+    )
+    ECHO Build finished. The %1 files are in %BUILDDIR%/%1.
+    GOTO :EOF
 
-if "%SPHINXBUILD%" == "" (
-	set SPHINXBUILD=sphinx-build
+:: Initialize variables
+IF "%SPHINXBUILD%" == "" (
+    SET SPHINXBUILD=sphinx-build
 )
-set BUILDDIR=_build
-set ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% .
-set I18NSPHINXOPTS=%SPHINXOPTS% .
-if NOT "%PAPER%" == "" (
-	set ALLSPHINXOPTS=-D latex_paper_size=%PAPER% %ALLSPHINXOPTS%
-	set I18NSPHINXOPTS=-D latex_paper_size=%PAPER% %I18NSPHINXOPTS%
-)
+SET BUILDDIR=_build
+SET ALLSPHINXOPTS=-d %BUILDDIR%/doctrees %SPHINXOPTS% .
+SET I18NSPHINXOPTS=%SPHINXOPTS% .
 
-if "%1" == "" goto help
-
-if "%1" == "help" (
-	:help
-	echo.Please use `make ^<target^>` where ^<target^> is one of
-	echo.  html       to make standalone HTML files
-	echo.  dirhtml    to make HTML files named index.html in directories
-	echo.  singlehtml to make a single large HTML file
-	echo.  pickle     to make pickle files
-	echo.  json       to make JSON files
-	echo.  htmlhelp   to make HTML files and a HTML help project
-	echo.  qthelp     to make HTML files and a qthelp project
-	echo.  devhelp    to make HTML files and a Devhelp project
-	echo.  epub       to make an epub
-	echo.  latex      to make LaTeX files, you can set PAPER=a4 or PAPER=letter
-	echo.  text       to make text files
-	echo.  man        to make manual pages
-	echo.  texinfo    to make Texinfo files
-	echo.  gettext    to make PO message catalogs
-	echo.  changes    to make an overview over all changed/added/deprecated items
-	echo.  linkcheck  to check all external links for integrity
-	echo.  doctest    to run all doctests embedded in the documentation if enabled
-	goto end
+:: Handle paper size
+IF NOT "%PAPER%" == "" (
+    SET ALLSPHINXOPTS=-D latex_paper_size=%PAPER% %ALLSPHINXOPTS%
+    SET I18NSPHINXOPTS=-D latex_paper_size=%PAPER% %I18NSPHINXOPTS%
 )
 
-if "%1" == "clean" (
-	for /d %%i in (%BUILDDIR%\*) do rmdir /q /s %%i
-	del /q /s %BUILDDIR%\*
-	goto end
-)
+:: Validate arguments
+IF "%1" == "" GOTO help
 
-if "%1" == "html" (
-	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The HTML pages are in %BUILDDIR%/html.
-	goto end
-)
+:: Build targets
+IF "%1" == "help" GOTO help
+IF "%1" == "clean" GOTO clean
+CALL :build_target %1
+GOTO end
 
-if "%1" == "dirhtml" (
-	%SPHINXBUILD% -b dirhtml %ALLSPHINXOPTS% %BUILDDIR%/dirhtml
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The HTML pages are in %BUILDDIR%/dirhtml.
-	goto end
-)
+:help
+    ECHO Please use "make ^<target^>" where ^<target^> is one of:
+    ECHO   html, dirhtml, singlehtml, pickle, json, htmlhelp, qthelp, devhelp,
+    ECHO   epub, latex, text, man, texinfo, gettext, changes, linkcheck, doctest
+    GOTO end
 
-if "%1" == "singlehtml" (
-	%SPHINXBUILD% -b singlehtml %ALLSPHINXOPTS% %BUILDDIR%/singlehtml
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The HTML pages are in %BUILDDIR%/singlehtml.
-	goto end
-)
-
-if "%1" == "pickle" (
-	%SPHINXBUILD% -b pickle %ALLSPHINXOPTS% %BUILDDIR%/pickle
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished; now you can process the pickle files.
-	goto end
-)
-
-if "%1" == "json" (
-	%SPHINXBUILD% -b json %ALLSPHINXOPTS% %BUILDDIR%/json
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished; now you can process the JSON files.
-	goto end
-)
-
-if "%1" == "htmlhelp" (
-	%SPHINXBUILD% -b htmlhelp %ALLSPHINXOPTS% %BUILDDIR%/htmlhelp
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished; now you can run HTML Help Workshop with the ^
-.hhp project file in %BUILDDIR%/htmlhelp.
-	goto end
-)
-
-if "%1" == "qthelp" (
-	%SPHINXBUILD% -b qthelp %ALLSPHINXOPTS% %BUILDDIR%/qthelp
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished; now you can run "qcollectiongenerator" with the ^
-.qhcp project file in %BUILDDIR%/qthelp, like this:
-	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\Data-Science-Project-Boilerplate.qhcp
-	echo.To view the help file:
-	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\Data-Science-Project-Boilerplate.ghc
-	goto end
-)
-
-if "%1" == "devhelp" (
-	%SPHINXBUILD% -b devhelp %ALLSPHINXOPTS% %BUILDDIR%/devhelp
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished.
-	goto end
-)
-
-if "%1" == "epub" (
-	%SPHINXBUILD% -b epub %ALLSPHINXOPTS% %BUILDDIR%/epub
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The epub file is in %BUILDDIR%/epub.
-	goto end
-)
-
-if "%1" == "latex" (
-	%SPHINXBUILD% -b latex %ALLSPHINXOPTS% %BUILDDIR%/latex
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished; the LaTeX files are in %BUILDDIR%/latex.
-	goto end
-)
-
-if "%1" == "text" (
-	%SPHINXBUILD% -b text %ALLSPHINXOPTS% %BUILDDIR%/text
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The text files are in %BUILDDIR%/text.
-	goto end
-)
-
-if "%1" == "man" (
-	%SPHINXBUILD% -b man %ALLSPHINXOPTS% %BUILDDIR%/man
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The manual pages are in %BUILDDIR%/man.
-	goto end
-)
-
-if "%1" == "texinfo" (
-	%SPHINXBUILD% -b texinfo %ALLSPHINXOPTS% %BUILDDIR%/texinfo
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The Texinfo files are in %BUILDDIR%/texinfo.
-	goto end
-)
-
-if "%1" == "gettext" (
-	%SPHINXBUILD% -b gettext %I18NSPHINXOPTS% %BUILDDIR%/locale
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Build finished. The message catalogs are in %BUILDDIR%/locale.
-	goto end
-)
-
-if "%1" == "changes" (
-	%SPHINXBUILD% -b changes %ALLSPHINXOPTS% %BUILDDIR%/changes
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.The overview file is in %BUILDDIR%/changes.
-	goto end
-)
-
-if "%1" == "linkcheck" (
-	%SPHINXBUILD% -b linkcheck %ALLSPHINXOPTS% %BUILDDIR%/linkcheck
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Link check complete; look for any errors in the above output ^
-or in %BUILDDIR%/linkcheck/output.txt.
-	goto end
-)
-
-if "%1" == "doctest" (
-	%SPHINXBUILD% -b doctest %ALLSPHINXOPTS% %BUILDDIR%/doctest
-	if errorlevel 1 exit /b 1
-	echo.
-	echo.Testing of doctests in the sources finished, look at the ^
-results in %BUILDDIR%/doctest/output.txt.
-	goto end
-)
+:clean
+    FOR /D %%i IN (%BUILDDIR%\*) DO RMDIR /Q /S %%i
+    DEL /Q /S %BUILDDIR%\*
+    ECHO Cleaned up build directory: %BUILDDIR%
+    GOTO end
 
 :end
+    ECHO Script execution completed.
+ENDLOCAL
