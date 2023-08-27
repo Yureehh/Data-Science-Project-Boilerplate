@@ -111,6 +111,23 @@ Data Operations
 - **Description**: Convert raw data into a processed dataset.
 
 
+Model Operations
+----------------
+
+**Save Trained Model**
+
+.. code-block:: bash
+
+    make save_model
+
+- **Description**: Save the trained machine learning model as a .pkl file.
+- **Location**: The model will be saved in the `models/` directory.
+
+.. admonition:: Troubleshooting
+
+    If saving fails, ensure that the model exists and the directory is writable.
+
+
 Testing
 -------
 

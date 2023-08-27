@@ -86,6 +86,18 @@ Docker: Recommended for more complex applications that may involve web deploymen
 | System Overhead  | Higher due to OS-level virtualization.                                 | Lower, only isolates Python environment.|
 | Use Case         | Ideal for deploying apps and microservices.                            | Ideal for data science and analytics.|
 
+## Model Management
+
+### Saving and Loading Models
+
+Models are saved as `.pkl` files for easy serialization and deserialization. You can save the trained model by running:
+
+```bash
+make save_model
+```
+
+This will save the model to the models/ directory. For more information and troubleshooting, refer to the commands documentation.
+
 ### Quick Start Guide
 
 1. **Environment Setup**: Decide between using Docker or Conda for environment setup. Follow the respective instructions in [getting_started.md](getting_started.md).

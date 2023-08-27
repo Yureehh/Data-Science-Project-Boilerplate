@@ -73,6 +73,11 @@ precommit:
 data: requirements
 	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/interim data/processed
 
+## Save trained model as .pkl
+save_model:
+	$(PYTHON_INTERPRETER) src/models/save_model.py
+
+
 ## Run all tests
 tests:
 	$(PYTHON_INTERPRETER) -m pytest
