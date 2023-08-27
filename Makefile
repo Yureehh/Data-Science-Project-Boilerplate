@@ -22,31 +22,19 @@ endif
 #################################################################################
 
 ## Set up python interpreter environment
+ifeq ($(ENV_METHOD),conda)
+CREATE_ENV_CMD = $(if $(HAS_CONDA),conda create --name $(PROJECT_NAME) python=3,echo ">>> Conda is not installed.")
+else ifeq ($(ENV_METHOD),docker)
+CREATE_ENV_CMD = docker build -t $(PROJECT_NAME) .
+else
+CREATE_ENV_CMD = $(PYTHON_INTERPRETER) -m pip install -q virtualenv virtualenvwrapper; \
+                 source `which virtualenvwrapper.sh`; \
+                 mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)
+endif
+
 create_environment:
-	ifeq ($(ENV_METHOD),conda)
-		# Conda related setup
-		@echo "Using Conda for environment setup..."
-		ifeq (True,$(HAS_CONDA))
-			@echo ">>> Detected conda, creating conda environment."
-			conda create --name $(PROJECT_NAME) python=3
-			@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-		else
-			@echo ">>> Conda is not installed."
-		endif
-	else ifeq ($(ENV_METHOD),docker)
-		# Docker related setup
-		@echo "Using Docker for environment setup..."
-		docker build -t $(PROJECT_NAME) .
-		@echo ">>> Docker image built. Run with:\ndocker run -it $(PROJECT_NAME)"
-	else
-		# Virtualenv related setup
-		@echo "Using virtualenv for environment setup..."
-		$(PYTHON_INTERPRETER) -m pip install -q virtualenv virtualenvwrapper
-		@echo ">>> Installing virtualenvwrapper if not already installed.\nMake sure the following lines are in shell startup file\n\
-		export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource `which virtualenvwrapper.sh`\n"
-		bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME) --python=$(PYTHON_INTERPRETER)"
-		@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
-	endif
+	@echo "Creating environment..."
+	@$(CREATE_ENV_CMD)
 
 
 ## Test python environment is setup correctly
