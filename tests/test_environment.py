@@ -10,6 +10,7 @@ def test_python_version():
         raise OSError(
             f"This project requires Python {REQUIRED_MAJOR}. Found: Python {sys.version}"
         )
+    print("Python version check passed.")
 
 
 # Call the function to perform the check
