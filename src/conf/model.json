@@ -1,0 +1,11 @@
+{
+  "placeholder": "This is a placeholder for the model parameters. Please replace it with the actual parameters.",
+  "RandomForest": {
+    "n_estimators": 100,
+    "max_depth": null
+  },
+  "SVM": {
+    "C": 1,
+    "kernel": "linear"
+  }
+}

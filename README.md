@@ -35,6 +35,8 @@ This repository is cloned every time I start a new Data Science project. It prov
     ├── src                <- Source code for use in this project.
     │   ├── __init__.py    <- Makes src a Python module
     │   │
+    |   ├── config.py       <- Configuration file for project variables
+    │   │
     │   ├── data           <- Scripts to download or generate data
     │   │   └── make_dataset.py
     │   │

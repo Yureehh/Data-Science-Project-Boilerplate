@@ -1,17 +1,11 @@
-import logging
 import os
-from logging import Logger
-from pathlib import Path
 from typing import Any
 
 import click
 from dotenv import find_dotenv, load_dotenv
 
-
-def setup_logger() -> Logger:
-    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    logging.basicConfig(level=logging.INFO, format=log_fmt)
-    return logging.getLogger(__name__)
+# Import setup_logger from your utils package
+from utils.logger import setup_logger
 
 
 @click.command()
@@ -21,7 +15,8 @@ def main(input_filepath: str, output_filepath: str) -> None:
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """
-    logger: Logger = setup_logger()
+    # Use the imported setup_logger function
+    logger = setup_logger(__name__)
     logger.info("making final data set from raw data")
 
 

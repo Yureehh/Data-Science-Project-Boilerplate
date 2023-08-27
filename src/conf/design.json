@@ -1,0 +1,7 @@
+{
+  "placeholder": "This is a placeholder for the configuration file. Please replace the content with your own configuration.",
+  "scoring": "accuracy",
+  "cv": 3,
+  "cv_type": "KFold",
+  "random_search_n_samples": 5
+}
