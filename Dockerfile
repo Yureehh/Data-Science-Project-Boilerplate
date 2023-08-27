@@ -1,8 +1,11 @@
 # Use an official Python image as the base for Python-specific operations
-FROM python:3.11
+FROM python:3.11-slim as base
 
 # Environment variables: Ensures Python logs and other output are immediately flushed to the terminal
 ENV PYTHONUNBUFFERED=1
+
+# Install OS-level dependencies (if any)
+# RUN ...
 
 # Sets the working directory inside the container for all subsequent instructions
 WORKDIR /app
