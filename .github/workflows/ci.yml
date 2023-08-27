@@ -38,6 +38,9 @@ jobs:
       - name: Install requirements
         run: |
           conda run -n testenv pip install -r requirements.txt
+      - name: Install mypy
+        run: |
+          conda run -n testenv pip install mypy
       - name: Run mypy
         run: |
           conda run -n testenv mypy src/  # Adjust the path as per your project structure
