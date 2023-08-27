@@ -1,0 +1,11 @@
+version: '3'
+services:
+  my_data_pipeline:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - ./data:/app/data  # Syncs the `./data` directory on the host with `/app/data` in the container
+      - ./logs:/app/logs  # Syncs the `./logs` directory on the host with `/app/logs` in the container
+    environment:
+      - PYTHONUNBUFFERED=1  # Keeps Python from buffering stdout and stderr
