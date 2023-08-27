@@ -4,7 +4,7 @@ import click
 from dotenv import find_dotenv, load_dotenv
 
 # Import the config module from your utils package
-import src.utils.config as config
+import src.utils.config as conf
 
 # Import setup_logger from your utils package
 from src.utils.logger import setup_logger
@@ -26,7 +26,6 @@ def main(
 
 
 if __name__ == "__main__":
-    # Use the value from the config module
-    project_dir: Any = config.PROJECT_DIR
+    project_dir: Any = conf.PROJECT_DIR
     load_dotenv(find_dotenv())
     main()

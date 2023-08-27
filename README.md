@@ -57,8 +57,6 @@ This repository is cloned every time I start a new Data Science project. It prov
     └── tox.ini             <- Tox file with settings for running tox; see tox.readthedocs.io.
 
 
----
-
 ## Pre-requisites
 
 - Docker (optional)
@@ -69,34 +67,6 @@ This repository is cloned every time I start a new Data Science project. It prov
 
 Refer to [getting_started.md](docs\getting_started.rst) for detailed instructions on setting up the project. Here's a brief outline of what you will find:
 
-### Environment Selection Guide
-Decide between using Docker or Conda for environment setup based on your project needs:
-
-Conda: Recommended for data science-focused projects, particularly those that don't require complex deployments. Ideal for projects using tools like Gradio and Streamlit.
-
-Docker: Recommended for more complex applications that may involve web deployments, APIs, or distributed systems. Ideal for projects that use Flask or similar frameworks for production.
-
-### Decision Table: Docker vs Conda
-
-| Feature          | Docker                                                                 | Conda                                |
-|------------------|------------------------------------------------------------------------|--------------------------------------|
-| Isolation        | Complete OS-level isolation.                                           | Environment-level isolation.         |
-| Complexity       | Higher initial learning curve.                                         | Easier to use for Python-specific tasks.|
-| Portability      | Easily shareable as a container.                                       | Environment file can be shared, but less portable.|
-| System Overhead  | Higher due to OS-level virtualization.                                 | Lower, only isolates Python environment.|
-| Use Case         | Ideal for deploying apps and microservices.                            | Ideal for data science and analytics.|
-
-## Model Management
-
-### Saving and Loading Models
-
-Models are saved as `.pkl` files for easy serialization and deserialization. You can save the trained model by running:
-
-```bash
-make save_model
-```
-
-This will save the model to the models/ directory. For more information and troubleshooting, refer to the commands documentation.
 
 ### Quick Start Guide
 
@@ -116,3 +86,60 @@ This will save the model to the models/ directory. For more information and trou
 6. **Development**: Refer to [getting_started.md](getting_started.md) for guidelines on developing your data science project.
 
 7. **Commands**: Always remember to add any new potential commands to the `getting_started.md` and `commands.md` files where necessary.
+
+### Environment Selection Guide
+Decide between using Docker or Conda for environment setup based on your project needs:
+
+Conda: Recommended for data science-focused projects, particularly those that don't require complex deployments. Ideal for projects using tools like Gradio and Streamlit.
+
+Docker: Recommended for more complex applications that may involve web deployments, APIs, or distributed systems. Ideal for projects that use Flask or similar frameworks for production.
+
+### Decision Table: Docker vs Conda
+
+| Feature          | Docker                                                                 | Conda                                |
+|------------------|------------------------------------------------------------------------|--------------------------------------|
+| Isolation        | Complete OS-level isolation.                                           | Environment-level isolation.         |
+| Complexity       | Higher initial learning curve.                                         | Easier to use for Python-specific tasks.|
+| Portability      | Easily shareable as a container.                                       | Environment file can be shared, but less portable.|
+| System Overhead  | Higher due to OS-level virtualization.                                 | Lower, only isolates Python environment.|
+| Use Case         | Ideal for deploying apps and microservices.                            | Ideal for data science and analytics.|
+
+### Model Management
+
+#### Saving and Loading Models
+
+Models are saved as `.pkl` files for easy serialization and deserialization. You can save the trained model by running:
+
+```bash
+make save_model
+```
+
+This will save the model to the models/ directory. For more information and troubleshooting, refer to the commands documentation.
+
+
+---
+
+### Using S3 with this Makefile
+
+The Makefile includes commands for syncing data to and from an S3 bucket. Before using it, make sure you've installed the AWS CLI and configured it with your credentials.
+
+#### Commands:
+
+1. **Upload Data to S3**: To upload data to your S3 bucket, set the `BUCKET` variable to your bucket name and run:
+
+    ```bash
+    make sync_data_to_s3 BUCKET=your-bucket-name
+    ```
+
+2. **Download Data from S3**: To download data from your S3 bucket to your local machine:
+
+    ```bash
+    make sync_data_from_s3 BUCKET=your-bucket-name
+    ```
+
+#### Notes:
+
+- The `PROFILE` variable can be used to specify an AWS profile other than the default.
+- The Makefile automatically checks for the AWS CLI. If it's not installed, the process will be aborted.
+
+For more details, refer to the Makefile and its comments.

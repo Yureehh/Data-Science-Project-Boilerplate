@@ -43,7 +43,7 @@ jobs:
           conda run -n testenv pip install mypy
       - name: Run mypy
         run: |
-          conda run -n testenv mypy src/  # Adjust the path as per your project structure
+          conda run -n testenv mypy --explicit-package-bases src/
       - name: Run tox
         run: |
           conda run -n testenv tox
