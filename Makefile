@@ -11,7 +11,7 @@ BUCKET ?=
 PROFILE = default
 PROJECT_NAME = Data-Science-Project-Boilerplate
 PYTHON_INTERPRETER = python3.11
-ENV_METHOD = conda # conda, docker
+ENV_METHOD = conda# conda, docker
 
 export PYTHONPATH=$(PROJECT_DIR)
 
@@ -34,15 +34,16 @@ help:
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ifeq ($(ENV_METHOD),conda)
-CREATE_ENV_CMD = $(if $(HAS_CONDA),conda create --name $(PROJECT_NAME) -prefix $(HOME)/anaconda3/envs/$(PROJECT_NAME) python=3.11,echo ">>> Conda is not installed.")
+CREATE_ENV_CMD = $(if $(HAS_CONDA),conda create --name $(PROJECT_NAME) python=3.11,echo ">>> Conda is not installed.")
 else ifeq ($(ENV_METHOD),docker)
 CREATE_ENV_CMD = docker build -t $(PROJECT_NAME) .
 endif
 
 ## Create python environment and install dependencies
-create_environment: requirements
+create_environment:
 	@echo "Creating environment..."
 	@$(CREATE_ENV_CMD)
+	@echo ">>> New conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
 
 ## Test python environment
 test_env:
