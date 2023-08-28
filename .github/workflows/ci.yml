@@ -1,49 +1,53 @@
 name: Python package
 
+env:
+  PYTHON_VERSION: 3.11
+
 on:
   push:
-    branches: [main, develop] # Add additional branches
+    branches: [main, develop]
   pull_request:
-    branches: [main, develop] # Add additional branches
+    branches: [main, develop]
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.10", "3.9"] # Multiple Python versions
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Cache pip dependencies
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Cache Dependencies
+        id: cache-deps
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - name: Cache conda dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/conda_pkgs_dir
-          key: ${{ runner.os }}-conda-${{ hashFiles('**/requirements.txt') }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install tox-conda
-          conda create --name testenv python=${{ matrix.python-version }}
-      - name: Install requirements
-        run: |
-          conda run -n testenv pip install -r requirements.txt
-      - name: Install mypy
-        run: |
-          conda run -n testenv pip install mypy
+          restore-keys: ${{ runner.os }}-pip-
+
+  lint:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run flake8
+        run: flake8 src
+      - name: Run black
+        run: black --check src
+      - name: Run isort
+        run: isort --check-only src
       - name: Run mypy
+        run: mypy src
+
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run pytest
+        run: pytest --cov=src --cov-fail-under=90
+      - name: Generate Coverage Report
         run: |
-          conda run -n testenv mypy --explicit-package-bases src/
-      - name: Run tox
-        run: |
-          conda run -n testenv tox
+          coverage report
+          coverage html
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report
+          path: coverage/

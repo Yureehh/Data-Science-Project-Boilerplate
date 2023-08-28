@@ -52,10 +52,7 @@ This repository is cloned every time I start a new Data Science project. It prov
     |
     │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations.
     |
-    ├── tests               <- Unit tests.
-    |
-    └── tox.ini             <- Tox file with settings for running tox; see tox.readthedocs.io.
-
+    └── tests               <- Unit tests.
 
 ## Pre-requisites
 

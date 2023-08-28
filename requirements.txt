@@ -3,6 +3,7 @@ black
 click
 coverage
 flake8
+isort
 pre-commit
 pytest
 pytest-cov
@@ -10,4 +11,3 @@ python-dotenv>=0.5.1
 Sphinx
 sphinx_rtd_theme
 spotipy
-tox-conda
