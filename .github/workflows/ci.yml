@@ -43,6 +43,7 @@ jobs:
           echo "::set-output name=exists::true"
         else
           echo "::set-output name=exists::false"
+        fi
     - name: Upload HTML Coverage Report
       if: steps.check_coverage.outputs.exists == 'true'
       uses: actions/upload-artifact@v2
