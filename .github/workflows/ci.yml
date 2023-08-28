@@ -33,7 +33,7 @@ jobs:
         flake8 src
         black --check src
         isort --check-only src
-        mypy src
+        mypy --explicit-package-bases src
     - name: Run Tests
       run: pytest --cov=src --cov-fail-under=90
     - name: Generate Coverage Report
