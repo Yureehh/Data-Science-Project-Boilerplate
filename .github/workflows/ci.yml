@@ -1,8 +1,5 @@
 name: Python package
 
-env:
-  PYTHON_VERSION: 3.11
-
 on:
   push:
     branches: [main, develop]
@@ -10,44 +7,42 @@ on:
     branches: [main, develop]
 
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11]
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Cache Dependencies
-        id: cache-deps
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
-
-  lint:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run flake8
-        run: flake8 src
-      - name: Run black
-        run: black --check src
-      - name: Run isort
-        run: isort --check-only src
-      - name: Run mypy
-        run: mypy src
-
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run pytest
-        run: pytest --cov=src --cov-fail-under=90
-      - name: Generate Coverage Report
-        run: |
-          coverage report
-          coverage html
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: coverage-report
-          path: coverage/
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        pip install pytest-cov flake8 black isort mypy
+    - name: Cache Dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: ${{ runner.os }}-pip-
+    - name: Run Checks
+      run: |
+        flake8 src
+        black --check src
+        isort --check-only src
+        mypy src
+    - name: Run Tests
+      run: pytest --cov=src --cov-fail-under=90
+    - name: Generate Coverage Report
+      run: |
+        coverage report
+        coverage html
+    - name: Upload Reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: reports
+        path: |
+          coverage/
