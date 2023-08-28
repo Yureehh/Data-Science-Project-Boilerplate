@@ -7,9 +7,7 @@ def test_python_version():
     system_major = sys.version_info.major
     # sourcery skip: no-conditionals-in-tests
     if system_major != REQUIRED_MAJOR:
-        raise OSError(
-            f"This project requires Python {REQUIRED_MAJOR}. Found: Python {sys.version}"
-        )
+        raise OSError(f"This project requires Python {REQUIRED_MAJOR}. Found: Python {sys.version}")
     print("Python version check passed.")
 
 

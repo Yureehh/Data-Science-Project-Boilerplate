@@ -17,8 +17,7 @@ def sample_fixture():
 @pytest.fixture(scope="function")
 def set_temp_env_var():
     """
-    A function-scoped fixture that temporarily sets an environment variable and then deletes it after the test
-    function that uses it has completed.
+    A function-scoped fixture that temporarily sets an environment variable and then deletes it after the test function that uses it has completed.
     """
     os.environ["TEMP_VAR"] = "temporary_value"
     yield

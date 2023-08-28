@@ -14,9 +14,7 @@ from src.utils.logger import setup_logger
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.argument("interim_filepath", type=click.Path())
 @click.argument("output_filepath", type=click.Path())
-def main(
-    input_filepath: str, interim_filepath: str, output_filepath: str
-) -> None:
+def main(input_filepath: str, interim_filepath: str, output_filepath: str) -> None:
     """Runs data processing scripts to turn raw data from (../raw) into
     cleaned data ready to be analyzed (saved in ../processed).
     """
