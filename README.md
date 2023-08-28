@@ -5,23 +5,25 @@ This repository is cloned every time I start a new Data Science project. It prov
 ## Project Organization
 
 ---
-    ├── .github/workflows    <- CI/CD configuration for GitHub Actions.
+    ├── .github/workflows   <- CI/CD configuration for GitHub Actions.
     |
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
+    │   ├── external        <- Data from third party sources.
+    │   ├── interim         <- Intermediate data that has been transformed.
+    │   ├── processed       <- The final, canonical data sets for modeling.
+    │   └── raw             <- The original, immutable data dump.
     |
-    ├── Dockerfile           <- Dockerfile for creating a Docker image.
+    ├── Dockerfile          <- Dockerfile for creating a Docker image.
     |
-    ├── docker-compose.yml   <- Docker Compose file for local development.
+    ├── docker-compose.yml  <- Docker Compose file for local development.
     |
     ├── docs                <- A default Sphinx project; see sphinx-doc.org for details.
     |
+    ├── LICENSE             <- License file.
+    |
     ├── logs                <- Log files.
     |
-    ├── Makefile             <- Makefile with commands like `make data` or `make train`.
+    ├── Makefile            <- Makefile with commands like `make data` or `make train`.
     |
     ├── models              <- Trained and serialized models, model predictions, or model summaries.
     |
@@ -30,7 +32,7 @@ This repository is cloned every time I start a new Data Science project. It prov
     ├── references          <- Data dictionaries, manuals, and all other explanatory materials.
     |
     ├── reports             <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting.
+    │   └── figures         <- Generated graphics and figures to be used in reporting.
     |
     ├── requirements.txt    <- The requirements file for reproducing the analysis environment.
     |
@@ -38,21 +40,24 @@ This repository is cloned every time I start a new Data Science project. It prov
     |
     ├── src                 <- Source code for use in this project.
     |
-    │   ├── __init__.py    <- Makes src a Python module.
+    │   ├── __init__.py     <- Makes src a Python module.
     |
-    │   ├── config.py      <- Configuration file for project variables.
+    │   ├── conf.py         <- Configuration file for project variables.
     |
-    │   ├── data           <- Scripts to download or generate data.
+    │   ├── data            <- Scripts to download or generate data.
     |
-    │   ├── features       <- Scripts to turn raw data into features for modeling.
+    │   ├── features        <- Scripts to turn raw data into features for modeling.
     |
-    │   ├── models         <- Scripts to train models and make predictions.
+    │   ├── models          <- Scripts to train models and make predictions.
     |
-    │   ├── utils          <- Scripts to perform miscellaneous tasks.
+    │   ├── utils           <- Scripts to perform miscellaneous tasks.
     |
-    │   └── visualization  <- Scripts to create exploratory and results-oriented visualizations.
+    │   └── visualization   <- Scripts to create exploratory and results-oriented visualizations.
     |
     └── tests               <- Unit tests.
+        └── unit            <- Unit tests for individual functions.
+        └── integration     <- Integration tests for the entire project.
+        └── e2e             <- End-to-end tests for the entire project.
 
 ## Pre-requisites
 
