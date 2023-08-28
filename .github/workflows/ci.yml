@@ -21,7 +21,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        pip install pytest-cov black flake8 isort mypy
+            pip install -r requirements.txt
     - name: Cache Dependencies
       uses: actions/cache@v2
       with:
@@ -35,14 +35,17 @@ jobs:
         isort --check-only src
         mypy --explicit-package-bases src
     - name: Run Tests
-      run: pytest --cov=src #TODO: when tests are completed can uncomment this pytest --cov=src
-    - name: Generate Coverage Report
+      run: pytest --cov=src --cov-report html #TODO: when tests are completed can uncomment: --cov-fail-under=90
+    - name: Check if coverage report exists
+      id: check_coverage
       run: |
-        coverage report
-        coverage html
-    - name: Upload Reports
+        if [[ -d "htmlcov/" ]]; then
+          echo "::set-output name=exists::true"
+        else
+          echo "::set-output name=exists::false"
+    - name: Upload HTML Coverage Report
+      if: steps.check_coverage.outputs.exists == 'true'
       uses: actions/upload-artifact@v2
       with:
-        name: reports
-        path: |
-          coverage/
+        name: html-coverage-report
+        path: ./htmlcov/
