@@ -43,3 +43,6 @@ files = ["src/**/*.py"]
 minversion = "6.0"
 addopts = "--cov=src --cov-report=term-missing"
 testpaths = ["tests"]
+
+[tool.flake8-docstrings]
+docstring-convention = "google"
