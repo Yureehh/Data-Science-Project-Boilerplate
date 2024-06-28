@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Data Science Project Boilerplate"
-version = "0.0.0"
+version = "0.1.0"
 description = "Repo to use as a template for data science projects"
 authors = ["Juri Fabbri <yureefabbri@gmail.com>"]
 readme = "README.md"
