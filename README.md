@@ -7,6 +7,10 @@ This repository is cloned every time I start a new Data Science project. It prov
 ---
     ├── .github/workflows   <- CI/CD configuration for GitHub Actions.
     |
+    ├── .pre-commit-config  <- Configuration file for pre-commit hooks.
+    |
+    ├── CHANGELOG.md        <- Changelog file.
+    |
     ├── data
     │   ├── external        <- Data from third party sources.
     │   ├── interim         <- Intermediate data that has been transformed.
@@ -32,11 +36,12 @@ This repository is cloned every time I start a new Data Science project. It prov
     ├── references          <- Data dictionaries, manuals, and all other explanatory materials.
     |
     ├── reports             <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures         <- Generated graphics and figures to be used in reporting.
+    │   ├── figures         <- Generated graphics and figures to be used in reporting.
+    |   └── insights        <- Insights and observations deducted from the analysis.
     |
-    ├── requirements.txt    <- The requirements file for reproducing the analysis environment.
+    ├── pyproject.toml      <- Global configuration file for Python projects. Handling both poetry and commitizen.
     |
-    ├── setup.py            <- Makes project pip installable (pip install -e .) so src can be imported.
+    ├── setup.cfg           <- Configuration file for tools like flake8, isort, and mypy.
     |
     ├── src                 <- Source code for use in this project.
     |
